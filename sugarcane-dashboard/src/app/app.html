@@ -1,0 +1,189 @@
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">🌱</div>
+      <div>
+        <h2>Sugarcane<span>AI</span></h2>
+        <p>FARMER MANAGEMENT</p>
+      </div>
+    </div>
+
+    <div class="menu-label">WORKSPACE</div>
+
+    <nav>
+      <button *ngFor="let page of ['Overview', 'Farmer Records', 'Payments', 'AI Assistant']"
+              [class.active]="activePage === page"
+              (click)="selectPage(page)">
+        <span class="nav-icon">
+          {{ page === 'Overview' ? '▦' : page === 'Farmer Records' ? '♙' : page === 'Payments' ? '₹' : '✳' }}
+        </span>
+        {{ page }}
+        <span *ngIf="page === 'AI Assistant'" class="new-tag">AI</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="leaf-decoration">🌾</div>
+      <h3>Growing together.</h3>
+      <p>Smarter farming starts with better information.</p>
+      <div class="version">SUGARCANE AI · DEMO</div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <div class="breadcrumb">Workspace <span>/</span> {{ activePage }}</div>
+        <h1>{{ activePage }}</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="status-dot"></span>
+        <span class="status-text">Farmer insights</span>
+        <div class="profile">SA</div>
+      </div>
+    </header>
+
+    <section *ngIf="activePage === 'Overview'">
+      <div class="welcome-banner">
+        <div class="welcome-content">
+          <span class="eyebrow">YOUR FARMER MANAGEMENT SPACE</span>
+          <h2>Good things grow<br>when we <em>grow together.</em></h2>
+          <p>Understand farmer supplies and payments in one simple place.</p>
+          <button class="banner-button" (click)="selectPage('AI Assistant')">
+            Ask your AI assistant <span>↗</span>
+          </button>
+        </div>
+        <div class="banner-art">
+          <div class="sun"></div>
+          <div class="hill hill-back"></div>
+          <div class="hill hill-front"></div>
+          <div class="cane cane-one">🌾</div>
+          <div class="cane cane-two">🌿</div>
+          <div class="art-caption">SMART FARMING<br><strong>BETTER TOMORROW</strong></div>
+        </div>
+        <div class="banner-number">01 / OVERVIEW</div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <h2>Your dashboard at a glance</h2>
+          <p>Key information from your farmer database</p>
+        </div>
+        <span class="demo-badge">LIVE DATA · COMING SOON</span>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card" *ngFor="let stat of stats; let i = index">
+          <div class="stat-top">
+            <span class="stat-icon" [class]=" 'stat-icon tone-' + i ">{{ stat.icon }}</span>
+            <span class="stat-index">0{{ i + 1 }}</span>
+          </div>
+          <p class="stat-title">{{ stat.title }}</p>
+          <h3>{{ stat.value }}</h3>
+          <p class="stat-note">{{ stat.note }}</p>
+        </article>
+      </div>
+
+      <div class="lower-grid">
+        <article class="panel quick-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Quick access</h2>
+              <p>Where would you like to go?</p>
+            </div>
+            <span class="panel-symbol">↗</span>
+          </div>
+
+          <button class="quick-item" (click)="selectPage('Farmer Records')">
+            <span class="quick-icon green-icon">♙</span>
+            <span class="quick-text"><strong>Farmer records</strong><small>Explore farmer and village details</small></span>
+            <span class="quick-arrow">→</span>
+          </button>
+
+          <button class="quick-item" (click)="selectPage('Payments')">
+            <span class="quick-icon yellow-icon">₹</span>
+            <span class="quick-text"><strong>Payment overview</strong><small>Review paid and pending amounts</small></span>
+            <span class="quick-arrow">→</span>
+          </button>
+
+          <button class="quick-item" (click)="selectPage('AI Assistant')">
+            <span class="quick-icon purple-icon">✳</span>
+            <span class="quick-text"><strong>Ask Sugarcane AI</strong><small>Get answers in everyday language</small></span>
+            <span class="quick-arrow">→</span>
+          </button>
+        </article>
+
+        <article class="panel ai-preview">
+          <div class="ai-orb">✳</div>
+          <span class="eyebrow">MEET YOUR AI ASSISTANT</span>
+          <h2>Your data.<br>Your questions.<br><em>Clear answers.</em></h2>
+          <p>No complicated reports. Just ask what you want to know about your farmers and get a helpful answer.</p>
+          <button class="text-button" (click)="selectPage('AI Assistant')">Explore AI assistant <span>→</span></button>
+          <div class="ai-watermark">AI</div>
+        </article>
+      </div>
+    </section>
+
+    <section *ngIf="activePage === 'Farmer Records' || activePage === 'Payments'">
+      <div class="page-intro">
+        <div class="intro-icon">{{ activePage === 'Payments' ? '₹' : '♙' }}</div>
+        <div>
+          <h2>{{ activePage === 'Payments' ? 'Payment management' : 'Farmer directory' }}</h2>
+          <p>{{ activePage === 'Payments' ? 'Keep track of payments and outstanding balances.' : 'Farmer names, villages and sugarcane supply records.' }}</p>
+        </div>
+      </div>
+      <div class="empty-state">
+        <div class="empty-icon">{{ activePage === 'Payments' ? '₹' : '🌾' }}</div>
+        <h2>{{ activePage === 'Payments' ? 'Your payment overview will appear here' : 'Your farmer records will appear here' }}</h2>
+        <p>Connect the PostgreSQL backend to display real records from your database.</p>
+        <button class="primary-button" (click)="selectPage('AI Assistant')">Ask the AI assistant →</button>
+      </div>
+    </section>
+
+    <section *ngIf="activePage === 'AI Assistant'" class="chat-page">
+      <div class="chat-intro">
+        <div class="ai-orb">✳</div>
+        <span class="eyebrow">YOUR FARMER DATA, MADE SIMPLE</span>
+        <h2>Ask away. <em>We'll figure it out.</em></h2>
+        <p>Ask questions about sugarcane supply, farmers, villages, or payments.</p>
+      </div>
+
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="chat-avatar">✳</div>
+          <div><strong>Sugarcane AI</strong><small>Farmer insights assistant</small></div>
+          <span class="online-pill"><span></span> Ready</span>
+        </div>
+
+        <div class="messages">
+          <div *ngFor="let message of messages" class="message-row" [class.user-row]="message.role === 'user'">
+            <div class="message-avatar" *ngIf="message.role === 'assistant'">✳</div>
+            <div class="message-bubble" [class.user-bubble]="message.role === 'user'">{{ message.text }}</div>
+          </div>
+        </div>
+
+        <div class="suggestion-area">
+          <p>TRY ASKING</p>
+          <div class="suggestion-list">
+            <button *ngFor="let suggestion of suggestions" (click)="askQuestion(suggestion)">
+              {{ suggestion }} <span>↗</span>
+            </button>
+          </div>
+        </div>
+
+        <form class="chat-input" (ngSubmit)="askQuestion()">
+          <input name="question" [(ngModel)]="question" placeholder="Ask about farmers, supply, payments...">
+          <button type="submit" [disabled]="!question.trim()">↑</button>
+        </form>
+        <p class="privacy-note">AI responses will be connected to your farmer database in the next step.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>🌱 Made for smarter sugarcane farming</span>
+      <span>Built with care · Sugarcane AI</span>
+    </footer>
+  </main>
+</div>
